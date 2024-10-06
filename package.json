@@ -1,0 +1,21 @@
+{
+  "name": "posters",
+  "version": "1.0.0",
+  "description": "Using EJS, Express, JavaScript, HTML, jQuery, TailwindCSS to create a Blog web application",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.0",
+    "jquery": "^3.7.1"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.13"
+  }
+}
