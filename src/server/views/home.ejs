@@ -1,4 +1,9 @@
 <%- include('partials/header.ejs') %>
 <h2>View All Posts</h2>
-<%= contents %>
+<%if (locals.FileWithContents) {%>
+  <%- include('partials/card.ejs') %>
+<%} else {%>
+  <p>No posts found 🥹</p>
+<%}%>
+
 <%- include('partials/footer.ejs') %>

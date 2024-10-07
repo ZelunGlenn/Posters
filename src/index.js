@@ -7,6 +7,7 @@ const app = express()
 const port = 3000
 
 
+// app.use(express.urlencoded({ extended: true }))
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -24,15 +25,34 @@ app.get('/', async(req, res) => {
   if (files.length === 0) {
     res.render('home')
   } else {
-    const contents = await Promise.all(
-      files.map((file) => 
-        fs.readFile(path.join(filePath, file), 'utf-8')
-      )
+    const FileWithContents = await Promise.all(
+      files.map(async(file) => {
+        const content = await fs.readFile(path.join(filePath, file), 'utf-8')
+        return {
+          fileName: file,
+          title: content.split('\n')[0],
+          name: content.split('\n')[1],
+          time: content.split('\n')[2],
+        }
+      })
     )
+
     res.render('home', {
-      contents: contents
+      FileWithContents,
     })
   }
+})
+
+app.get('/detail', async(req, res) => {
+  // req.query.fileName
+  const pathz = path.join(__dirname, 'server', 'data', req.query.fileName)
+  const file = await fs.readFile(pathz, 'utf-8')
+  res.render('detail', {
+    title: file.split('\n')[0],
+    name: file.split('\n')[1],
+    time: file.split('\n')[2],
+    content: file.split('\n').slice(3).join('\n'),
+  })
 })
 
 app.listen(port, () => {

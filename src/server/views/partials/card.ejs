@@ -1,0 +1,6 @@
+<!-- need to consider inside of a card -->
+
+<%FileWithContents.forEach((FileWithContent) => {%>
+  <a href='/detail?fileName=<%= FileWithContent["fileName"] %>'><%= FileWithContent["title"] %> <%= FileWithContent["name"]%> <%= FileWithContent["time"] %></a>
+  <br>
+<%})%>
