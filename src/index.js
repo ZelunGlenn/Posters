@@ -7,7 +7,7 @@ const app = express()
 const port = 3000
 
 
-// app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: true }))
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -52,6 +52,28 @@ app.get('/detail', async(req, res) => {
     name: file.split('\n')[1],
     time: file.split('\n')[2],
     content: file.split('\n').slice(3).join('\n'),
+  })
+})
+
+app.get('/newPost', (req, res) => {
+  res.render('newPost')
+})
+
+app.post('/create', (req, res) => {
+  // { name: 'da', title: 'dsa', content: 'dsa' }
+  const { name, title, content } = req.body
+  const pathz = path.join(__dirname, 'server', 'data')
+  const time = "-" + new Date().getHours() + "-" + new Date().getMinutes()
+  const contentTime = new Date().getHours() + ":" + new Date().getMinutes()
+  const fileName = name + time + ".txt"
+  const contents = `${title}\n${name}\n${contentTime}\n${content}`
+
+  fs.writeFile(`${pathz}/${fileName}`, contents, (err, data) => {
+    if (err) {
+      console.log(err)
+    } else {
+      console.log('success')
+    }
   })
 })
 
