@@ -52,7 +52,8 @@ app.get('/detail', async(req, res) => {
     title: file.split('\n')[0],
     name: file.split('\n')[1],
     time: file.split('\n')[2],
-    content: file.split('\n').slice(3).join('\n'),
+    content: file.split('\n')[3],
+    image: file.split('\n').slice(4).join('\n'),
   })
 })
 
@@ -60,14 +61,23 @@ app.get('/newPost', (req, res) => {
   res.render('newPost')
 })
 
-app.post('/create', (req, res) => {
+app.post('/create', async (req, res) => {
   // { name: 'da', title: 'dsa', content: 'dsa' }
   const { name, title, content } = req.body
   const pathz = path.join(__dirname, 'server', 'data')
   const time = "-" + new Date().getHours() + "-" + new Date().getMinutes()
   const contentTime = new Date().getHours() + ":" + new Date().getMinutes()
   const fileName = name + time + ".txt"
-  const contents = `${title}\n${name}\n${contentTime}\n${content}`
+
+
+  let imageAddresses = ""
+  const fileImage = path.join(__dirname, 'public', 'images.txt')
+  //read images.txt
+  await fs.readFile(fileImage, 'utf-8').then((data) => {
+    imageAddresses = `${data}`
+  })
+  const randomImageAddress = imageAddresses.split('\n')[Math.floor(Math.random() * imageAddresses.split('\n').length)]
+  const contents = `${title}\n${name}\n${contentTime}\n${content}\n${randomImageAddress}`
 
   fs.writeFile(`${pathz}/${fileName}`, contents, (err, data) => {
     if (err) {
@@ -87,16 +97,18 @@ app.get('/edit', async(req, res) => {
     title: file.split('\n')[0],
     name: file.split('\n')[1],
     time: file.split('\n')[2],
-    content: file.split('\n').slice(3).join('\n'),
+    content: file.split('\n')[3],
+    image: file.split('\n').slice(4).join('\n'),
   })
 })
 
 app.post('/update', (req, res) => {
-  const { fileName, title, time, name, content } = req.body
-
+  const { fileName, title, time, name, content, image} = req.body
+  console.log(image)
   const pathz = path.join(__dirname, 'server', 'data', fileName)
 
-  const contents = `${title}\n${name}\n${time}\n${content}`
+
+  const contents = `${title}\n${name}\n${time}\n${content}\n${image}`
 
   fs.writeFile(pathz, contents, (err, data) => {
     if (err) {
