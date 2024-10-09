@@ -48,6 +48,7 @@ app.get('/detail', async(req, res) => {
   const pathz = path.join(__dirname, 'server', 'data', req.query.fileName)
   const file = await fs.readFile(pathz, 'utf-8')
   res.render('detail', {
+    fileName: req.query.fileName,
     title: file.split('\n')[0],
     name: file.split('\n')[1],
     time: file.split('\n')[2],
@@ -75,7 +76,77 @@ app.post('/create', (req, res) => {
       console.log('success')
     }
   })
+  res.redirect('/')
 })
+
+app.get('/edit', async(req, res) => {
+  const pathz = path.join(__dirname, 'server', 'data', req.query.fileName)
+  const file = await fs.readFile(pathz, 'utf-8')
+  res.render('edit', {
+    fileName: req.query.fileName,
+    title: file.split('\n')[0],
+    name: file.split('\n')[1],
+    time: file.split('\n')[2],
+    content: file.split('\n').slice(3).join('\n'),
+  })
+})
+
+app.post('/update', (req, res) => {
+  const { fileName, title, time, name, content } = req.body
+
+  const pathz = path.join(__dirname, 'server', 'data', fileName)
+
+  const contents = `${title}\n${name}\n${time}\n${content}`
+
+  fs.writeFile(pathz, contents, (err, data) => {
+    if (err) {
+      console.log(err)
+    } else {
+      console.log('success')
+    }
+  })
+  //redirect to home page
+  res.redirect('/')
+})
+
+
+app.delete('/files/:fileName', async (req, res) => {
+  const fileName = req.params.fileName
+  const filepath = path.join(__dirname, 'server', 'data', fileName)
+  
+
+  // // wrong approach
+  // await fs.access(filepath)
+  // await fs.unlink(filepath)
+  // console.log('File deleted successfully:', fileName);
+  // res.json({ message: `File ${fileName} deleted successfully` })
+  // Redirect after successful deletion
+  // res.redirect('/');
+
+
+  try {
+    // Check if the file exists before deleting
+    await fs.access(filepath);  // This checks if the file exists
+
+    // Delete the file
+    await fs.unlink(filepath);
+    console.log(`File ${fileName} deleted successfully`);
+
+    // Send a success response
+    res.json({ message: `File ${fileName} deleted successfully` });
+  } catch (err) {
+    if (err.code === 'ENOENT') {
+      // If the file is not found
+      console.error('File not found:', fileName);
+      return res.status(404).json({ message: 'File not found' });
+    } else {
+      // Other errors
+      console.error('Error deleting file:', err);
+      return res.status(500).json({ message: 'Failed to delete file' });
+    }
+  }
+})
+
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port} at http://localhost:${port}`)

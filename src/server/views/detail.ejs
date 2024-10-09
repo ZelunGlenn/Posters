@@ -1,3 +1,7 @@
+<% 
+
+%>
+
 <%- include('partials/header.ejs') %>
 
 
@@ -6,4 +10,30 @@
 <p><%= time %></p>
 <p><%= content %></p>
 
+<a href="/edit?fileName=<%= fileName %>"><button>Edit</button></a>
+<button onclick="deleteFile('<%= fileName %>')">Delete</button>
+
 <%- include('partials/footer.ejs') %>
+
+
+<script>
+  function deleteFile(fileName) {
+    fetch(`/files/${fileName}`, {
+      method: 'DELETE',
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to delete file');
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log(data.message);
+      
+      // Remove any references to the deleted file from the UI
+      // Optionally redirect to the homepage or refresh the page after successful deletion
+      window.location.href = '/';
+    })
+    .catch(error => console.error('Error:', error));
+  }
+</script>
