@@ -1,8 +1,10 @@
 <%- include('partials/header.ejs') %>
-<a href='/newPost'><button>Create a new post</button></a>
-<h2>View All Posts</h2>
+<a href='/newPost' class="absolute right-6 top-6 font-light"><button>Create</button></a>
+<br>
 <%if (locals.FileWithContents) {%>
-  <%- include('partials/card.ejs') %>
+  <div id="posts-track" class="flex gap-[1.5vmin] absolute left-[50%] top-[50%]" style="transform: translate(0%, -50%)" data-mouse-down-at="0"  data-prev-percentage="0">
+    <%- include('partials/card.ejs') %>
+  </div>
 <%} else {%>
   <p>No posts found 🥹</p>
 <%}%>

@@ -1,6 +1,13 @@
 <!-- need to consider inside of a card -->
 
 <%FileWithContents.forEach((FileWithContent) => {%>
-  <a href='/detail?fileName=<%= FileWithContent["fileName"] %>'><%= FileWithContent["title"] %> <%= FileWithContent["name"]%> <%= FileWithContent["time"] %></a>
+  <% const imageAddress = FileWithContent['image'] %>
+  <a href='/detail?fileName=<%= FileWithContent["fileName"] %>'  draggable="false">
+    <div class="w-[25vmin] h-[66vmin] card contrast-[.9] drop-shadow-md saturate-[.7] flex justify-end items-end p-10" style="background-image: url('<%= imageAddress %>'); background-position: 100% 50%; background-size: cover;">
+      <p class="[writing-mode:vertical-lr]">
+        <%= FileWithContent["title"] %>
+      </p>
+    </div>
+  </a>
   <br>
 <%})%>

@@ -33,6 +33,7 @@ app.get('/', async(req, res) => {
           title: content.split('\n')[0],
           name: content.split('\n')[1],
           time: content.split('\n')[2],
+          image: content.split('\n').slice(4).join('\n'),
         }
       })
     )
