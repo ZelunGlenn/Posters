@@ -16,7 +16,7 @@ app.set('views', path.join(__dirname, 'server', 'views'));
 
 app.set('view engine', 'ejs');
 
-app.use(express.static('public'))
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', async(req, res) => {
   const filePath = path.join(__dirname, 'server', 'data')

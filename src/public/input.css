@@ -1,3 +1,49 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  label {
+    @apply block text-gray-100 text-xs font-normal mb-2;
+  }
+  
+  input, textarea {
+    @apply shadow border rounded w-full text-xs py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2;
+  }
+}
+
+@layer utilities {
+.detail-page, .editForm, .newPost {
+  opacity: 0;
+  transform: translateY(100vh); /* Off-screen down */
+  transition: transform 1s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.8s ease-in; 
+  /* Slide in from bottom with a fade-in */
+}
+
+.detail-page.animate-in,
+.editForm.animate-in,
+.newPost.animate-in {
+  opacity: 1;
+  transform: translateY(0); /* Slide into place */
+}
+
+.detail-page.animate-out {
+  opacity: 0;
+  transform: translateY(100vh); /* Slide out of view */
+  transition: transform 1s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.8s ease-out;
+}
+
+
+
+}
+
+@keyframes FadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+
+@keyframes SlideIn {
+  0% { transform: translateY(100vh); }
+  100% { transform: translateY(0); }
+}

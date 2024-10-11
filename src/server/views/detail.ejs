@@ -1,18 +1,24 @@
 <%- include('partials/header.ejs') %>
 
-<% 
 
-%>
-
-<div class="w-screen h-screen bg-cover bg-center ease-in-out duration-500" style="background-image: url('<%= image %>');">
-  <h2><%= title %></h2>
-  <h3><%= name %></h3>
-  <p><%= time %></p>
-  <p><%= content %></p>
+<div class="w-screen h-screen bg-cover bg-center detail-page contrast-[.9] saturate-[.7] flex flex-col items-center justify-center" id="detail-page" style="background-image: url('<%= image %>');">
+  <a href="/" class="absolute right-10 top-10" id="back-button"><button>Back</button></a>
+  <div class="flex gap-2 pl-32">
+    <a href="/edit?fileName=<%= fileName %>" class="flex items-center justify-center"><button>Edit</button></a>
+    <button onclick="deleteFile('<%= fileName %>')" class="flex items-center justify-center">Delete</button>
+  </div>
+  
+  <h2 class="text-9xl cursor-default tracking-wide"><%= title %></h2>
+  
+  <div class="flex font-extralight text-xs cursor-default mt-4">
+    <p><%= name %></p>
+  </div>
+  <p class="invisible"><%= time %></p>
+  <p class="mt-10 cursor-default text-xs"><%= content %></p>
+  
 </div>
 
-<a href="/edit?fileName=<%= fileName %>"><button>Edit</button></a>
-<button onclick="deleteFile('<%= fileName %>')">Delete</button>
+
 
 <%- include('partials/footer.ejs') %>
 

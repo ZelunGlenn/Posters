@@ -1,23 +1,35 @@
-<h1>Edit</h1>
+<%- include('partials/header.ejs') %>
+<div class="w-screen h-screen bg-cover bg-center flex flex-col justify-center items-center contrast-[.9] saturate-[.7]" style="background-image: url('<%= image %>');">
+<form action="/update" method="POST" class="editForm">
+  <div class="mb-3">
+    <label for="fileName">File Name</label>
+    <input type="text" name="fileName" value="<%= fileName %>" class="text-black" readonly>
+  </div>
+    <div class="mb-3">
 
-<form action="/update" method="POST">
-  <label for="fileName">File Name:</label>
-  <input type="text" name="fileName" value="<%= fileName %>" readonly>
-  <br>
-  <label for="title">title:</label>
-  <input type="text" name="title" value="<%= title %>">
-  <br>
-  <label for="time">time:</label>
-  <input type="text" name="time" value="<%= time %>" readonly>
-  <br>
-  <label for="name">name:</label>
-  <input type="text" name="name" id="" value="<%= name %>">
-  <br>
-  <label for="content">content:</label>
-  <textarea name="content" id=""><%= content %></textarea>
-  <br>
-  <label for="image">Image:</label>
-  <input type="text" name="image" value="<%= image %>" readonly>
-  <br>
-  <input type="submit" value="Update">
-</form>
+      <label for="title">title</label>
+      <input type="text" name="title" value="<%= title %>" class="text-black">
+    </div>
+    <div class="mb-3">
+      <label for="time">time</label>
+      <input type="text" name="time" value="<%= time %>" class="text-black" readonly>
+    </div>
+    <div class="mb-3">
+      <label for="name">name</label>
+      <input type="text" name="name" id="" value="<%= name %>" class="text-black">
+    </div>
+    <div class="mb-3">
+      <label for="content">content</label>
+      <textarea name="content" id="" class="shadow appearance-none border rounded w-full text-xs py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"><%= content %></textarea>
+    </div>
+    <div class="mb-3">
+      <label for="image">Image</label>
+      <input type="text" name="image" value="<%= image %>" class="text-black" readonly>
+    </div>
+    <div class="mt-9">
+      <input type="submit" value="Update" class="cursor-pointer text-white border font-bold rounded">
+    </div>
+  </form>
+</div>
+
+<%- include('partials/footer.ejs') %>

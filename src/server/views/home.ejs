@@ -6,7 +6,9 @@
     <%- include('partials/card.ejs') %>
   </div>
 <%} else {%>
-  <p>No posts found 🥹</p>
+  <div class="w-screen h-screen flex justify-center items-center">
+    <p class="text-[20rem] text-[#141414]" style="-webkit-text-stroke: 2px white;">No post</p>
+  </div>
 <%}%>
 
 <%- include('partials/footer.ejs') %>
