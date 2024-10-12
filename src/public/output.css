@@ -801,6 +801,11 @@ input:focus, textarea:focus {
   padding-bottom: 0.5rem;
 }
 
+.px-20 {
+  padding-left: 5rem;
+  padding-right: 5rem;
+}
+
 .pl-32 {
   padding-left: 8rem;
 }
